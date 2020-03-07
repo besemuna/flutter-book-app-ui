@@ -11,7 +11,7 @@ I built a book shelf app's ui in flutter. [Design Credit](https://dribbble.com/s
 
 ## Screenshot
 
-![dashboard](screenshots/one.jpg)
+![dashboard](screenshots/one.jpg | width=200)
 
 ## Contributing
 
