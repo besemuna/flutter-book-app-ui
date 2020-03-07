@@ -1,6 +1,6 @@
 
 # Flutter Book App UI
-I built a book shelf app's ui in flutter. Design credit
+I built a book shelf app's ui in flutter. [Design Credit](https://dribbble.com/shots/8807175-Bookshelf-Free-Adobe-XD)
 
 ## To Do
 * [X] Start
