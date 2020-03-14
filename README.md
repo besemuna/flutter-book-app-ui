@@ -4,8 +4,8 @@ I built a book shelf app's ui in flutter. [Design Credit](https://dribbble.com/s
 
 ## To Do
 * [X] Start
-* [ ] Build Main Screen
-* [ ] Build Details Screen
+* [X] Build Main Screen
+* [X] Build Details Screen
 * [ ] Try to animations
 
 
@@ -13,6 +13,7 @@ I built a book shelf app's ui in flutter. [Design Credit](https://dribbble.com/s
 
 ![dashboard](screenshots/one.jpg)
 
+<img src="screenshots/one.jpg" width="70px">
 ## Contributing
 
 You can send a pull request if you want to collaborate on this project.

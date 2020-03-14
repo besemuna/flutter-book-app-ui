@@ -6,7 +6,7 @@ class Book {
   Book({this.title, this.cover, this.category});
 }
 
-final List<Book> mainBooks = [
+final List<Book> books = [
   Book(
     title: "Six of crows",
     category: "Classic",

@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 
+import '../Book.dart';
 import '../MainBook.dart';
+import 'DetailsScreen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -15,6 +17,23 @@ class _MainScreenState extends State<MainScreen> {
       for (var c = 0; c < int; c++)
         Image(image: AssetImage("assets/images/star.png"))
     ]);
+  }
+
+  var _currentIndex = 0;
+  var _icons = [Icons.favorite, Icons.import_contacts, Icons.person];
+
+  buildBottomNavigationBarItem() {
+    return _icons.map((data) {
+      return BottomNavigationBarItem(
+        icon: Icon(
+          data,
+          color: _currentIndex == _icons.indexOf(data)
+              ? Color(0XFF007084)
+              : Color(0XFFBDC3C7),
+        ),
+        title: SizedBox.shrink(),
+      );
+    }).toList();
   }
 
   @override
@@ -81,91 +100,151 @@ class _MainScreenState extends State<MainScreen> {
           ),
           SizedBox(height: 5),
           Container(
-              height: 180,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    width: 240,
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
+            height: 180,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: mainBooks.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  width: 240,
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          padding: EdgeInsets.all(13),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                new Radius.circular(10.0),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    offset: Offset(0, 2),
+                                    blurRadius: 6)
+                              ]),
+                          height: 135,
                           child: Container(
-                            padding: EdgeInsets.all(13),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  new Radius.circular(10.0),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black12,
-                                      offset: Offset(0, 2),
-                                      blurRadius: 6)
-                                ]),
-                            height: 135,
-                            child: Container(
-                                margin: EdgeInsets.only(left: 100),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      mainBooks[index].title,
-                                      style: TextStyle(
-                                          fontFamily: "CircularStd",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      mainBooks[index].about,
-                                      style: TextStyle(
-                                          fontFamily: "CircularStd",
-                                          fontSize: 9,
-                                          color: Color(0xff7F8589),
-                                          height: 1.5),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        buildStars(mainBooks[index].stars),
-                                        Text(mainBooks[index].category,
-                                            style: TextStyle(
-                                                fontFamily: "CircularStd",
-                                                fontSize: 10,
-                                                color: Color(0xff007084),
-                                                fontWeight: FontWeight.w700))
-                                      ],
-                                    ),
-                                  ],
-                                )),
+                              margin: EdgeInsets.only(left: 100),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    mainBooks[index].title,
+                                    style: TextStyle(
+                                        fontFamily: "CircularStd",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    mainBooks[index].about,
+                                    style: TextStyle(
+                                        fontFamily: "CircularStd",
+                                        fontSize: 9,
+                                        color: Color(0xff7F8589),
+                                        height: 1.5),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      buildStars(mainBooks[index].stars),
+                                      Text(mainBooks[index].category,
+                                          style: TextStyle(
+                                              fontFamily: "CircularStd",
+                                              fontSize: 10,
+                                              color: Color(0xff007084),
+                                              fontWeight: FontWeight.w700))
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
+                      Positioned(
+                        left: 2,
+                        bottom: 2,
+                        child: Container(
+                          width: 110,
+                          height: 160,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        DetailsScreen()),
+                              );
+                            },
+                            child: Hero(
+                              tag: mainBooks[index].title,
+                              child: Image(
+                                  image: AssetImage(mainBooks[index].cover),
+                                  fit: BoxFit.fill),
+                            ),
                           ),
                         ),
-                        Positioned(
-                          left: 2,
-                          bottom: 2,
-                          child: Container(
-                            width: 110,
-                            height: 160,
-                            child: Image(
-                                image: AssetImage(mainBooks[index].cover),
-                                fit: BoxFit.fill),
-                          ),
-                        )
-                      ],
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 35),
+          Text(
+            "You may also like",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          SizedBox(height: 15),
+          Container(
+            height: 200,
+            child: ListView.builder(
+              itemCount: books.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) => Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ClipRect(
+                      child: Image.asset(books[index].cover),
                     ),
-                  );
-                },
-                itemCount: mainBooks.length,
-              ))
+                    Text(
+                      books[index].title,
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      books[index].category,
+                      style: TextStyle(
+                          color: Color(0xff007084),
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        currentIndex: 0,
+        elevation: 0,
+        items: buildBottomNavigationBarItem(),
       ),
     );
   }
